@@ -1,0 +1,20 @@
+{
+  "name": "source-mysql-sales_transactions",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:mysql://mysql:3306/db?useSSL=false&allowPublicKeyRetrieval=true",
+    "connection.user": "user",
+    "connection.password": "password",
+    "table.whitelist": "db.sales_transactions",
+    "mode": "timestamp",
+    "timestamp.column.name": "timestamp",
+    "poll.interval.ms": "1000",
+    "tasks.max": "1",
+    "transforms": "renametopic,setkey",
+    "transforms.renametopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.renametopic.regex": ".*",
+    "transforms.renametopic.replacement": "sales-transactions",
+    "transforms.setkey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.setkey.fields": "transaction_id"
+  }
+}
