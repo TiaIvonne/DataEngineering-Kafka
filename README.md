@@ -2,7 +2,7 @@
 
 # Procesamiento de datos en tiempo real con kafka
 
-**Autora**: Ivonne Yanez Mendoza **Email**: [ivonne\@imendoza.io](mailto:ivonne@imendoza.io){.email} **GitHub**: <https://github.com/TiaIvonne>
+**Autora**: Ivonne Yanez Mendoza  **Email**: [ivonne\@imendoza.io](mailto:ivonne@imendoza.io)  **GitHub**: <https://github.com/TiaIvonne>  
 
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red.svg)
 ![Kafka](https://img.shields.io/badge/Apache%20Kafka-7.8.0-black)
