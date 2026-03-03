@@ -1,6 +1,4 @@
----
----
----
+
 
 # Procesamiento de datos en tiempo real con kafka
 
@@ -18,7 +16,7 @@
 4.  [Soporte](#soporte)
 5.  [Licencia](#licencia)
 
-## Descripción {#descripción}
+## Descripción 
 
 Este proyecto corresponde al modulo de Kafka y Procesamiento de datos en tiempo real del Master en Ingenieria de datos de la Universidad Complutense de Madrid.
 
@@ -30,7 +28,7 @@ Se debe construir una solución basada en Apache Kafka que permita:
 
 3.  Transformar los datos mediante procesamiento streaming para generar insights del tipo: alertas de anomalías en los sensores y ventas por categoría de producto cada minuto.
 
-## Estructura del directorio {#estructura-del-directorio}
+## Estructura del directorio 
 
      0.tarea/
       ├── assets/
@@ -55,7 +53,7 @@ Fuera de la estructura del directorio se encuentran tres scripts que se deben ej
 **shutdown.sh:** Para detener entorno.\
 **start_connectors.sh:** Lanza los connectores en lote en vez de ejecutar cada comando por separado.
 
-## Desarrollo del proyecto {#desarrollo-del-proyecto}
+## Desarrollo del proyecto 
 
 ### Crear los topics
 
@@ -129,6 +127,6 @@ O en el control center:
 
 
 
-## Licencia {#licencia}
+## Licencia 
 
 Todos los derechos reservados
