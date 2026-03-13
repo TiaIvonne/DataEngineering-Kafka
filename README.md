@@ -305,6 +305,9 @@ En el control center se puede revisar un mensaje con mas detalle:
   "timestamp": 1773430169000
 }
 ```
+
+
+#### 3. Procesamiento en tiempo real de sensores
 ## Licencia {#licencia}
 
 Todos los derechos reservados
