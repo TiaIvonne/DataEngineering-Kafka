@@ -1,12 +1,9 @@
----
-output:
-  html_document: default
-  pdf_document: default
----
 
 # Procesamiento de datos en tiempo real con kafka
 
-**Autora**: Ivonne Yanez Mendoza **Email**: [ivonne\@imendoza.io](mailto:ivonne@imendoza.io) **GitHub**: <https://github.com/TiaIvonne>
+**Autora**: Ivonne Yanez Mendoza   
+**Email**: [ivonne\@imendoza.io](mailto:ivonne@imendoza.io)   
+**GitHub**: <https://github.com/TiaIvonne>
 
 ![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-red.svg) ![Kafka](https://img.shields.io/badge/Apache%20Kafka-7.8.0-black) ![Status](https://img.shields.io/badge/status-running-green)
 
@@ -18,7 +15,7 @@ output:
 4.  [Soporte](#soporte)
 5.  [Licencia](#licencia)
 
-## Descripción {#descripción}
+## Descripción 
 
 Este proyecto corresponde al modulo de Kafka y Procesamiento de datos en tiempo real del Master en Ingeniería de datos de la Universidad Complutense de Madrid.
 
@@ -32,7 +29,7 @@ Se debe construir una solución basada en Apache Kafka que permita:
 
 4.  Transformar los datos mediante procesamiento streaming para generar insights del tipo: alertas de anomalías en los sensores y ventas por categoría de producto cada minuto.
 
-## Estructura del directorio {#estructura-del-directorio}
+## Estructura del directorio 
 
      0.tarea/
       ├── assets/
@@ -57,7 +54,7 @@ Fuera de la estructura del directorio se encuentran tres scripts que se deben ej
 **shutdown.sh:** Para detener entorno.\
 **start_connectors.sh:** Lanza los connectores en lote en vez de ejecutar cada comando por separado.
 
-## Desarrollo del proyecto {#desarrollo-del-proyecto}
+## Desarrollo del proyecto 
 
 ### 1. Crear los topics
 
@@ -308,6 +305,6 @@ En el control center se puede revisar un mensaje con mas detalle:
 
 
 #### 3. Procesamiento en tiempo real de sensores
-## Licencia {#licencia}
+## Licencia 
 
 Todos los derechos reservados
