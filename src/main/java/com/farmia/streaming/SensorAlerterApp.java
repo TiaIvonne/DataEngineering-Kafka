@@ -70,7 +70,7 @@ public class SensorAlerterApp {
         return builder.build();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "sensor-alerter-app");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
@@ -80,5 +80,7 @@ public class SensorAlerterApp {
         KafkaStreams streams = new KafkaStreams(topology, props);
         streams.start();
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+        // esto evita que los hilos terminen a los segundos sin enviar mensajes
+        Thread.currentThread().join();
     }
 }

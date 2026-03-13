@@ -14,7 +14,15 @@
     },
     {
       "name": "timestamp",
-      "type": "long"
+      "type": {
+        "type": "long",
+        "arg.properties": {
+          "iteration": {
+            "start": 1741478400000,
+            "step": 1000
+          }
+        }
+      }
     },
     {
       "name": "temperature",
