@@ -1,5 +1,5 @@
 
-# Procesamiento de datos en tiempo real con kafka
+# Procesamiento de datos en tiempo real con Kafka
 
 **Autora**: Ivonne Yanez Mendoza   
 **Email**: [ivonne\@imendoza.io](mailto:ivonne@imendoza.io)   
@@ -17,7 +17,7 @@
 
 ## Descripción 
 
-Este proyecto corresponde al modulo de Kafka y Procesamiento de datos en tiempo real del Master en Ingeniería de datos de la Universidad Complutense de Madrid.
+Este proyecto corresponde al módulo de Kafka y Procesamiento de datos en tiempo real del Máster en Ingeniería de datos de la Universidad Complutense de Madrid.
 
 Se debe construir una solución basada en Apache Kafka que permita:
 
@@ -42,17 +42,18 @@ Se debe construir una solución basada en Apache Kafka que permita:
       ├── shutdown.sh
       └── start_connectors.sh
 
-Los directorios mas relevantes para esta practica son:
+Los directorios más relevantes para esta practica son:
 
 **connectors**: Contienen los conectores generados en formato JSON los cuales son necesarios para generar datos sintéticos, integrarlos con MySql, procesar los datos en tiempo real de los sensores e integrar con una base de datos no SQL.\
-**datagen**: Contienen la definicion del esquema y del tipo de dato a utilizar en los connectores.\
-**sql**: Contiene la definicion de la tabla sales_transaccions que debe ser procesada en MySql\
-**src**: La fuente del proyecto y donde se encuentra el codigo base para procesar los datos en tiempo real de farmaia.
+**datagen**: Contienen la definición del esquema y del tipo de dato a utilizar en los conectores.\
+**sql**: Contiene la definición de la tabla sales_transactions que debe ser procesada en MySql\
+**src**: La fuente del proyecto y donde se encuentra el código base para procesar los datos en tiempo real de FarmaIA.
 
 Fuera de la estructura del directorio se encuentran tres scripts que se deben ejecutar en la shell que realizan las siguientes acciones:\
 **setup.sh:** Contiene todo lo necesario para levantar Docker y evitar tener que configurar el archivo yml en el directorio.\
 **shutdown.sh:** Para detener entorno.\
-**start_connectors.sh:** Lanza los connectores en lote en vez de ejecutar cada comando por separado.
+**start_connectors.sh:** Lanza los conectores en lote en vez de ejecutar cada comando por separado.\
+**create-topics.sh:** Crea los topics en lote.\
 
 ## Desarrollo del proyecto 
 
@@ -68,7 +69,7 @@ Se pide la creación de los siguientes topics (contenedor de mensajes)
 
 4.  sales-summary: Contiene el resumen de ventas (con agregaciones) generadas al procesar los datos.
 
-Para crear los conectores es necesario comenzar lanzando el script setup.sh que es el encargado de crear el entorno basado en docker el cual construirá el entorno de trabajo para esta practica:
+Para crear los topics que es el primer paso de esta práctica es necesario comenzar lanzando el script setup.sh que es el encargado de crear el entorno basado en docker el cual construirá el entorno de trabajo para esta práctica:
 
 ``` bash
  0.tarea git:(master) ✗ ./setup.sh
@@ -79,20 +80,20 @@ OK
 
 ![Docker Running](assets/docker-running.png)
 
-Una vez que esta corriendo docker es momento de entrar en la consola interactiva y crear los topics
+Una vez que está corriendo docker es momento de entrar en la consola interactiva y crear los topics
 
 ``` shell-session
 0.tarea git:(master) ✗ docker exec -it broker-1 /bin/bash
 ```
 
-Una vez en la consola se lanzan los siguientes comandos para crear los topicos:
+Una vez en la consola se lanzan los siguientes comandos para crear los tópicos:
 
 ``` bash
 [appuser@broker-1 ~]$ kafka-topics --bootstrap-server broker-1:29092 --create --topic sensor-telemetry --partitions 4 --replication-factor 2 --config max.message.bytes=64000 --config flush.messages=1
 ```
 
 Nota personal: Esto puede ser un poco tedioso por cada topic, por lo que he creado un script de bash que hace esta tarea por cada topic a crear.\
-El script se encuentra en el directorio raiz con el nombre de **create-topics.sh**.
+El script se encuentra en el directorio raíz con el nombre de **create-topics.sh**.
 
 ``` bash
 BOOTSTRAP_SERVER="broker-1:29092"
@@ -131,9 +132,9 @@ O en el control center:
 
 ### 2. Datasets de entrada
 
-Una vez creados los topics, es momento de prestar atención a la estructura o esquema que tendrán los datos a ser procesados. Los datos de transacciones de ventas ya vienen configurado por defecto con este repositorio, se debe crear la estructura de los sentores agricolas.
+Una vez creados los topics, es momento de prestar atención a la estructura o esquema que tendrán los datos a ser procesados. Los datos de transacciones de ventas ya vienen configurado por defecto con este repositorio, se debe crear la estructura de los sensores agrícolas.
 
-Para esto se debe completar el archivo sensor-telemetry.avsc con los campos requeridos en la practica:
+Para esto se debe completar el archivo sensor-telemetry.avsc con los campos requeridos en la práctica:
 
 -   sensor_id: string
 
@@ -141,9 +142,9 @@ Para esto se debe completar el archivo sensor-telemetry.avsc con los campos requ
 
 -   temperature: float con un rango entre 15 y 45 grados máximo
 
--   humidity: float con rango minimo de 10 y máximo 40
+-   humidity: float con rango mínimo de 10 y máximo 40
 
--   soil_fertility: float con rango minimo de 30 y máximo 100
+-   soil_fertility: float con rango mínimo de 30 y máximo 100
 
 ``` json
 {
@@ -176,11 +177,11 @@ Para esto se debe completar el archivo sensor-telemetry.avsc con los campos requ
 
 ### 3. Tareas a resolver
 
-#### 1. Generacion de datos sinteticos con Kafka Connect
+#### 1. Generacion de datos sintéticos con Kafka Connect
 
-Este conector simula las lecturas de los sensores de datos y envia hacia el topic sensor-telemetry.
+Este conector simula las lecturas de los sensores de datos y envía hacia el topic sensor-telemetry.
 Una vez creado el esquema en el punto anterior se pueden configurar los conectores necesarios para procesar transacciones.
-En la practica se incluye un script de bash que lanza todos los conectores de una vez, tambien se pueden lanzar por separado.
+En la práctica se incluye un script de bash que lanza todos los conectores de una vez, también se pueden lanzar por separado.
 
 
 ```json
@@ -242,7 +243,7 @@ Esta tabla es la tabla transactions que ademas esta configurada en el proyecto.
 
 Este topic es algo distinto al anterior pues para funcionar correctamente se deben lanzar dos conectores internos que generan datos en datagen source-datagen-_transactions y sink-mysql-_transactions. 
 
-Una vez lanzados se puede observar los datos que estan guardandose en sales_transactions en my sql.
+Una vez lanzados se puede observar los datos que estan guardándose en sales_transactions en MySQL.
 En este caso se ha utilizado DBeaver para mostrar los resultados:
 
 ![my sql](assets/mysql-sales.png)
@@ -271,7 +272,7 @@ curl -d @"./connectors/source-mysql-sales_transactions.json" -H "Content-Type: a
     "transforms.renametopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
     "transforms.renametopic.regex": ".*",
     "transforms.renametopic.replacement": "sales-transactions",
-    "transforms.setkey.type": "org.apache.kafka.connect.transforms.ValueToKey", y 
+    "transforms.setkey.type": "org.apache.kafka.connect.transforms.ValueToKey", 
     "transforms.setkey.fields": "transaction_id",
     "name": "source-mysql-sales_transactions"
   },
@@ -287,7 +288,7 @@ Se pueden ver los resultados en el control center o directamente en la terminal 
     --bootstrap-server broker-1:29092 \
     --topic sales-transactions 2>/dev/null
 ```
-![Sensor telemetry en tiempo real](assets/sales-transactions1.gif)
+![Sales Transactions](assets/sales-transactions1.gif)
 
 
 En el control center se puede revisar un mensaje con mas detalle:
@@ -305,6 +306,237 @@ En el control center se puede revisar un mensaje con mas detalle:
 
 
 #### 3. Procesamiento en tiempo real de sensores
+
+En esta practica el objetivo es escribir una aplicacion que procese los datos del topic sensor-telemetry
+
+Cuando se detecten condiciones anómalas de temperatura mayores a 35 grados o humedad de menos 20% debe enviar esas alertas a **sensor-alerts** con un formato tipo de mensaje:
+
+```json
+{
+  "sensor_id": "sensor_001",
+  "alert_type": "HIGH_TEMPERATURE",
+  "timestamp": 1741479493000,
+  "details": "Temperature exceeded 35C"
+}
+
+```
+
+Para esto se ha creado la aplicación SensorAlerterApp.java 
+La App se encuentra aqui: src/main/java/com/farmia/streaming/SensorAlerterApp.java
+
+Algunos puntos de interés:
+
+En la app se indica el topic de entrada y salida
+
+```java
+private static final String INPUT_TOPIC = "sensor-telemetry";
+private static final String OUTPUT_TOPIC = "sensor-alerts";
+private static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
+```
+
+El filtro solicitado
+```java
+.filter((key, record) -> {
+    float temperature = (float) record.get("temperature");
+    float humidity = (float) record.get("humidity");
+    return temperature > 35.0f || humidity < 20.0f;
+})
+```
+Con este comando mvn exec:java -Dexec.mainClass="com.farmia.streaming.SensorAlerterApp" se ejecuta la App
+En la terminal se puede ver la generacion de mensajes con picos de temperatura y/o humedad 
+
+![Sensor Alerts](assets/sensor-alert.gif)
+
+Y en el control center un detalle del mensaje generado el cual es acorde a lo solicitado en la practica
+
+```json
+{
+  "sensor_id": "sensor_717",
+  "alert_type": "HIGH_TEMPERATURE",
+  "timestamp": 1741479493000,
+  "details": "Temperature exceeded 35C: 35.15159"
+}
+{
+  "sensor_id": "sensor_127",
+  "alert_type": "LOW_HUMIDITY",
+  "timestamp": 1741479939000,
+  "details": "Humidity below 20%: 17.266754"
+}
+```
+
+#### 4. Procesamiento en tiempo real de transacciones de ventas
+
+Tal como en el caso anterior, el objetivo aquí es generar una App que procese sales-transactions donde sea capaz de agrupar 
+los datos por categoría de producto y calcule los ingresos por categoría cada un minuto.
+
+El topic que recibirá estos mensajes es **sales-summary** con un tipo de mensaje especifico:
+
+```json
+{
+  "category": "fertilizers",
+  "total_quantity": 20,
+  "total_revenue": 1000.10,
+  "window_start": 1773515220000,
+  "window_end": 1773515280000
+}
+```
+
+La App se encuentra aquí: src/main/java/com/farmia/streaming/SalesSummaryApp.java. Dentro del archivo se encuentran las configuraciones
+para poder generar las agregaciones
+
+```java
+private static final String INPUT_TOPIC = "sales-transactions";
+private static final String OUTPUT_TOPIC = "sales-summary";
+private static final String SCHEMA_REGISTRY_URL = "http://localhost:8081";
+```
+
+En este apartado del código (lineas 37 a 44) se configura la agrupación por categoría y el procesamiento en intervalos de un minuto.
+
+```java
+// Configuracion de los requerimientos de agrupacion de los datos de categoria x minuto
+    .groupBy(
+        (key, record) ->record.get("category").toString(),
+        Grouped.with(Serdes.String(), genericAvroSerde))
+// Configura el procesamiento en intervalos de 1 minuto
+    .windowedBy(
+        TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(1))
+)
+```
+
+
+Y aquí es donde se configura el criterio de agregación para calcular el total de ingresos 
+
+```java
+// Criterios de agregacion para obtener el totalRevenue
+    .aggregate(
+// Cuando llega la primera transaccion este es el valor de partida
+    () -> "0,0.0",
+    (category, record, accumulator) -> {
+    String[] parts = accumulator.split(",");
+    int totalQuantity = Integer.parseInt(parts[0]) + (int) record.get("quantity");
+// Este bloque convierte el decimal de MySql a formato double
+    Conversions.DecimalConversion decimalConversion = new org.apache.avro.Conversions.DecimalConversion();
+    org.apache.avro.Schema priceSchema = record.getSchema().getField("price").schema();
+    double price = decimalConversion.fromBytes(
+    (java.nio.ByteBuffer) record.get("price"),
+    priceSchema,
+    priceSchema.getLogicalType()
+).doubleValue();
+
+```
+Dado que en MySql la columna price viene con formato decimal, se ha utilizado un conversor de avro para convertirlo a doubleValue 
+y desplegar el formato correcto en el mensaje saliente (ver lineas 53 al 59)
+
+Es momento de ejecutar la aplicacion con el comando mvn exec:java -Dexec.mainClass="com.farmia.streaming.SalesSummaryApp"
+En la terminal se ve la generación de mensajes:
+
+![Sales Summary](assets/sales-summary.gif)
+
+
+En el control center se puede ver un mensaje en formato json:
+```json
+{
+  "category": "seeds",
+  "total_quantity": 22,
+  "total_revenue": 3260.85,
+  "window_start": 1773514260000,
+  "window_end": 1773514320000
+}
+```
+
+Durante la creación de las App al ejecutar por primera vez con el comando mvn daba error de compilación y cerraba sin procesar mensajes. Para resolver esto en ambas App se añadió al bloque main un InterruptedException y un Thread.currentThread().join() con el join se evita que se cierre sin enviar mensajes:
+
+
+```java
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Properties props = new Properties();
+        props.put(StreamsConfig.APPLICATION_ID_CONFIG, "sensor-alerter-app");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092,localhost:9093,localhost:9094");
+        props.put("schema.registry.url", SCHEMA_REGISTRY_URL);
+
+        Topology topology = createTopology();
+        KafkaStreams streams = new KafkaStreams(topology, props);
+        streams.start();
+        Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
+        // esto evita que los hilos terminen a los segundos sin enviar mensajes
+        Thread.currentThread().join();
+    }
+}
+```
+#### 5. Integración de MongoDB con Kafka Connect
+
+El objetivo de esta ultima practica es escribir los datos de sensor-alerts a una coleccion en MongoDB utilizando un sink connector
+Para esto se ha creado el conector **sink-mongodb-sensor_alerts.json**
+
+```json
+{
+  "name": "sink-mongodb-sensor_alerts",
+  "config": {
+    "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+    "topics": "sensor-alerts",
+    "connection.uri": "mongodb://admin:secret123@mongodb:27017",
+    "database": "farmia",
+    "collection": "sensor_alerts",
+    "tasks.max": "1",
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter.schemas.enable": "false",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.BsonOidStrategy"
+  }
+}
+
+```
+
+A modo de repaso, estos mensajes de alerta se generan desde la App SensorAlerter que ya ha enviado mensajes al control center de tipo
+
+```json
+{
+  "sensor_id": "sensor_716",
+  "alert_type": "HIGH_TEMPERATURE",
+  "timestamp": 1741482888000,
+  "details": "Temperature exceeded 35C: 38.30977"
+}
+```
+
+Con el sink conector se envían estos mensajes generados en sensor-alerts a mongo.
+En la terminal se puede revisar como se van generando los mensajes que estan llegando a mongoDB. Utilizando bash es posible generar los mensajes en formato json.
+
+```bash
+while true; do
+    docker exec mongodb mongosh -u admin -p secret123 --quiet \
+      --eval 'db.getSiblingDB("farmia").sensor_alerts.find().sort({$natural:-1}).limit(5).forEach(doc => print(EJSON.stringify(doc, null, 2)))'
+    sleep 0.5
+  done
+```
+
+![Mongo](assets/mongo-terminal.png)
+
+También se puede revisar en Mongo compass
+
+![Mongo Compass](assets/mongo-compass.png)
+
+Con esto se cubre la practica completa donde se ha explorado el ciclo de obtener datos, agruparlos, crear nuevos mensajes a partir de los datos entrantes e interactuar con bases de datos relacionales y no sql.
+Al momento de terminar la practica es momento de detener el container utilizando ./shutdown.sh.
+```bash
+Deteniendo entorno
+[+] Running 14/13
+ ✔ Container mongodb             Removed                                                                                                                                                1.7s 
+ ✔ Container control-center      Removed                                                                                                                                                7.8s 
+ ✔ Container ksqldb-cli          Removed                                                                                                                                                0.8s 
+ ✔ Container mysql               Removed                                                                                                                                                7.7s 
+ ✔ Container ksqldb-server       Removed                                                                                                                                                3.3s 
+ ✔ Container connect             Removed                                                                                                                                               13.2s 
+ ✔ Container schema-registry     Removed                                                                                                                                                2.6s 
+ ✔ Container broker-2            Removed                                                                                                                                                5.4s 
+ ✔ Container broker-1            Removed                                                                                                                                                5.3s 
+ ✔ Container broker-3            Removed                                                                                                                                                5.3s 
+ ✔ Container controller-3        Removed                                                                                                                                                7.2s 
+ ✔ Container controller-1        Removed                                                                                                                                                1.7s 
+ ✔ Container controller-2        Removed                                                                                                                                                1.7s 
+ ✔ Network 1environment_default  Removed                                                                                                                                                0.1s 
+OK
+```
+
 ## Licencia 
 
 Todos los derechos reservados
